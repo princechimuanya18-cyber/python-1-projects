@@ -1,0 +1,106 @@
+import random  # This module helps the computer make random moves
+
+# Step 1: Create the game board as a list
+board = ["1", "2", "3",
+         "4", "5", "6",
+         "7", "8", "9"]
+
+# Step 2: Function to display the current game board
+def display_board():
+    print("\n")
+    print(board[0] + " | " + board[1] + " | " + board[2])
+    print("--+---+--")
+    print(board[3] + " | " + board[4] + " | " + board[5])
+    print("--+---+--")
+    print(board[6] + " | " + board[7] + " | " + board[8])
+    print("\n")
+
+# Step 3: Function to check if someone has won
+def check_winner(player):
+    # All possible winning combinations
+    win_combinations = [
+        [0, 1, 2],  # top row
+        [3, 4, 5],  # middle row
+        [6, 7, 8],  # bottom row
+        [0, 3, 6],  # left column
+        [1, 4, 7],  # middle column
+        [2, 5, 8],  # right column
+        [0, 4, 8],  # left-to-right diagonal
+        [2, 4, 6]   # right-to-left diagonal
+    ]
+    # Check if any of the combinations has the same mark ('X' or 'O')
+    for combo in win_combinations:
+        if board[combo[0]] == board[combo[1]] == board[combo[2]] == player:
+            return True
+    return False  # No winner yet
+
+# Step 4: Function to check if the board is full (for a tie)
+def is_tie():
+    # If no numbers (1–9) remain, the board is full
+    for i in board:
+        if i not in ["X", "O"]:
+            return False
+    return True
+
+# Step 5: Computer makes its move
+def computer_move():
+    # Create a list of empty positions
+    empty_spots = [i for i in range(9) if board[i] not in ["X", "O"]]
+    # Randomly pick one position
+    move = random.choice(empty_spots)
+    board[move] = "X"  # Mark the position with 'X'
+
+# Step 6: Start the game — computer plays first
+print("Welcome to Tic-Tac-Toe 🎮")
+print("You are 'O' and the computer is 'X'.")
+print("Squares are numbered 1 to 9 like this:\n")
+print("1 | 2 | 3\n--+---+--\n4 | 5 | 6\n--+---+--\n7 | 8 | 9\n")
+
+# Computer starts with 'X' in the center
+board[4] = "X"
+display_board()
+
+# Step 7: Game loop — continues until win or tie
+while True:
+    # --- Player's move ---
+    user_move = input("Enter the number of the square you want to mark (1-9): ")
+
+    # Check if input is valid
+    if not user_move.isdigit() or int(user_move) < 1 or int(user_move) > 9:
+        print("❌ Invalid input. Choose a number from 1 to 9.")
+        continue
+
+    user_move = int(user_move) - 1  # Convert to index (0-based)
+
+    if board[user_move] in ["X", "O"]:
+        print("❌ That square is already taken. Try again.")
+        continue
+
+    # Place user's mark
+    board[user_move] = "O"
+    display_board()
+
+    # Check if user wins
+    if check_winner("O"):
+        print("🎉 You win! Congratulations!")
+        break
+
+    # Check for tie
+    if is_tie():
+        print("🤝 It's a tie!")
+        break
+
+    # --- Computer's move ---
+    print("Computer's turn...")
+    computer_move()
+    display_board()
+
+    # Check if computer wins
+    if check_winner("X"):
+        print("💻 Computer wins! Better luck next time.")
+        break
+
+    # Check for tie again after computer move
+    if is_tie():
+        print("🤝 It's a tie!")
+        break
