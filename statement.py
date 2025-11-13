@@ -9,3 +9,5 @@ if number_2 == number:
         print("You\'re wrong")
 
 
+for i in number:
+    multiply =  i * number
