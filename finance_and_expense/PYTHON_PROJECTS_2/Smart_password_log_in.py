@@ -20,7 +20,7 @@
 
 import tkinter as tk
 from PIL import Image, ImageTk, ImageFilter
-import new_windows
+
 
 # ----------------------------
 # ROOT WINDOW
@@ -64,6 +64,20 @@ card.configure(width=800, height=300)
 card.pack_propagate(False)
 
 card.place(relx=0.5, rely=0.5, anchor="center")
+
+# ----------------------------
+# FUNCTIONS FOR BUTTON ACTIONS
+# ----------------------------
+def login_window():
+    print("YES: User already has an account (login flow starts)")
+    # create a new window here if you want
+    # top = tk.Toplevel(root)
+    # top.title("Login Window")
+
+
+def signup_window():
+    print("NO: User wants to create a new account (signup flow starts)")
+    # create new window here if you want
 
 # ----------------------------
 # HEADER TEXT
@@ -115,7 +129,7 @@ yes_btn = tk.Button(
     fg="white",
     activebackground="#157347",
     activeforeground="white",
-    command=new_windows.login_window,
+    command=login_window,
     **style_btn
 )
 yes_btn.grid(row=0, column=0, padx=10)
@@ -127,7 +141,7 @@ no_btn = tk.Button(
     fg="white",
     activebackground="#bb2d3b",
     activeforeground="white",
-    command=new_windows.signup_window,
+    command=signup_window,
     **style_btn
 )
 no_btn.grid(row=0, column=1, padx=10)
